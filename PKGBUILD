@@ -1,6 +1,6 @@
 # Maintainer: Jan Alexander Steffens (heftig) <heftig@archlinux.org>
 
-pkgbase=linux
+pkgbase=linux-rust-enabled
 pkgver=6.7.3.arch1
 pkgrel=2
 pkgdesc='Linux'
@@ -42,12 +42,12 @@ sha256sums=('b7f08c652747574a3aa26e317d7a8f23ffab3fb645e1b1533b215dcfd5742b44'
             'SKIP'
             '268b0fb642718059cf9c9cf15a6a3fc41108f4d6fa85aed92e4e3318448c438c'
             'SKIP'
-            '44ab14648c0036d070fe290c18f6dd928f29b5352b50655ad96c354f428955ca')
+            '8b79d2d0619b9ab616a5ef30f252e6656b5e6ea3380ac069d823e0896ceded19')
 b2sums=('2dea0685e5c9b279beb7661f4efa91ccd662d55eb7c5a69aff52fc74bbb574fcb490a9abcc44d895583ca21b3e6860b3c5e9c35daae66b22c4fe97cab44b2a75'
         'SKIP'
         '54f72e3000c7d02a6109296db7853e140ea2c2295d33de6b865f98227241e6d0a4a753caee5709ae334a842559214e0ccb3e1fbf4fb21be8df66c84a9a2b6751'
         'SKIP'
-        '526e6a5dc674218466d7596c8b96e219bb8a17b8a1e676c95e8d67ff3c507cc9a91e5e0c624d86ae207753f66525eaed77ce526d06186cb9d9e448116cb1bacb')
+        'bdf6301bdafcc71f8c0bac4b4f9722fac82dcb3c3798e7a1299c08a826cab75043437539f785dc7416c6e43372c2448e255b135ffdc40cdeda4313ed7d7162a2')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -72,7 +72,7 @@ prepare() {
 
   echo "Setting config..."
   cp ../config .config
-  make olddefconfig
+  make LLVM=1 olddefconfig
   diff -u ../config .config || :
 
   make -s kernelrelease > version
@@ -81,8 +81,7 @@ prepare() {
 
 build() {
   cd $_srcname
-  make all
-  make htmldocs
+  make LLVM=1 all -j$(nproc)
 }
 
 _package() {
@@ -229,7 +228,6 @@ _package-docs() {
 pkgname=(
   "$pkgbase"
   "$pkgbase-headers"
-  "$pkgbase-docs"
 )
 for _p in "${pkgname[@]}"; do
   eval "package_$_p() {

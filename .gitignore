@@ -1,0 +1,7 @@
+/*.patch.zst
+/*.patch.zst.sig
+/*.pkg.*
+/*.tar.sign
+/*.tar.xz
+pkg/
+src/
