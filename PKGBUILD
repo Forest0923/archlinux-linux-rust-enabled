@@ -42,12 +42,12 @@ sha256sums=('f68d9f5ffc0a24f850699b86c8aea8b8687de7384158d5ed3bede37de098d60c'
             'SKIP'
             '0adec3263ea8c798639b25c9f8550515ec7ff32d84a1caf7e4284efd77883a74'
             'SKIP'
-            '0f191864fd0d72c91b3f3b9e6ed6f38042bf3631ae394fedcf103c7d7755c793')
+            '69d1eda52ccaa257686c94e2f5b56c291f726ba999b6dce3a0dfa0f83f81f3de')
 b2sums=('578114990b2987e2b241a7492bd4a69c46adfd613eba9715d63fd4565c19678dfab06b5107a0ff791e9a3190cb52b75a76d231aa39d4e7fba24e79f7f18935a1'
         'SKIP'
         'd07daffabcea4c6c5cce2a5f73553471e634f9a5d3dcbe041834bfb22292bb33882f7ea6d95422d04db2276074914877b9a3f2b67b171cf8e304b5be5c0a4b68'
         'SKIP'
-        'cdfa71c3e06a722276216b89a84f9e788f13afa0d27ef2f80cfc3f51b0f6fc847260b706f3492147a58f9bf7b40a9d836d3cad2bc5274f3bf0817b35134593f8')
+        'ec872a2e1a6b9bb8f50fee73b09fbb6599caceb77ff72b710180bb2216157a7afae1548d8c180225a06cf21baee36f6c32b98e4ea3ade3bb8b170ba4a3a9edf9')
 
 export KBUILD_BUILD_HOST=archlinux
 export KBUILD_BUILD_USER=$pkgbase
@@ -162,6 +162,8 @@ _package-headers() {
 
   # https://bugs.archlinux.org/task/71392
   install -Dt "$builddir/drivers/iio/common/hid-sensors" -m644 drivers/iio/common/hid-sensors/*.h
+
+  cp -r rust $builddir/rust
 
   echo "Installing KConfig files..."
   find . -name 'Kconfig*' -exec install -Dm644 {} "$builddir/{}" \;
